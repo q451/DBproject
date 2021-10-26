@@ -1,2 +1,0 @@
-# DBproject
-Django web 
