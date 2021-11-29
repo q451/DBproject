@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>首页</title>
+    <!-- CSS only -->
+<script src="js/jquery-3.2.1.min.js" type="text/javascript" charset="utf-8"></script>
+<link rel="stylesheet" href="common/mobiscroll/mobiscroll.custom-2.6.2.min.css" />
+<script type="text/javascript" src="common/mobiscroll/mobiscroll.custom-2.6.2.min.js" ></script>
+<script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+<!-- JavaScript Bundle with Popper -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div>
+        <nav class="navbar navbar-dark bg-dark">
+            <div class="nav-wrap">
+              <div class="nav-primary">
+                <a href="#">
+                  <img src="/static/images/logo.png" width="142" alt="爬虫logo">
+                </a>
+              </div>
+            </div>
+            <ul class="nav">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="{% url 'index_page' %}">豆瓣榜单推荐</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'max_critical' %}">豆瓣评价人数前十</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'ping_feng_page' %}">各国巅峰制作</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'tui_jian_page' %}">电影推荐</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'analysis' %}">电影分析统计</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link disabled">&emsp;&emsp;&emsp;&emsp;&emsp;
+                    &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;</a>
+              </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled">欢迎:{{name}}</a>
+                </li>
+            </ul>
+              <div>
+                <a class="navbar-brand" href="#">设置</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+                      <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="{% url 'data_page' %}">数据更新</a>
+                    </li>
+                    <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="/person_message/{{ id }}">个人中心</a>
+                    </li>
+                      <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="/update_page/{{ id }}">修改信息</a>
+                    </li>
+                      <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="/change_page/{{ id }}">修改密码</a>
+                    </li>
+                      <li class="nav-item">
+                      <a class="nav-link active" aria-current="page" href="{% url 'logout' %}">退出</a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+        </nav>
+        <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example" tabindex="0">
+            <table class="table table-bordered">
+                <tr>
+                    <td>
+                        <h3 class="text-center">每个国家拍摄数量饼状图</h3>
+                        <div id="main" style="width: 600px;height:400px;"></div>
+                        <script type="text/javascript">
+                            var myChart = echarts.init(document.getElementById('main'));
+                            myChart.setOption({
+                                tooltip: {},
+                                series : [
+                                    {
+                                        name: '电影数量',
+                                        type: 'pie',    // 设置图表类型为饼图
+                                        radius: '55%',  // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
+                                        data:[          // 数据数组，name 为数据项名称，value 为数据项值
+                                            {value:{{China}}, name:'中国'},
+                                            {value:{{American}}, name:'美国'},
+                                            {value:{{Japan}}, name:'日本'},
+                                            {value:{{YinDu}}, name:'印度'},
+                                            {value:{{other}}, name:'其他'},
+                                        ]
+
+                                    }
+                                ]
+                            })
+                        </script>
+                    </td>
+                    <td>
+                        <h3 class="text-center">电影数量柱状图</h3>
+                        <div id="main1" style="width: 600px;height:400px;"></div>
+                        <script type="text/javascript">
+                            // 基于准备好的dom，初始化echarts实例
+                            var myChart = echarts.init(document.getElementById('main1'));
+
+                            // 指定图表的配置项和数据
+                            var option = {
+                                tooltip: {},
+                                legend: {
+                                    data:['电影数量']
+                                },
+                                xAxis: {
+                                    data: ["中国","美国","日本","印度","其他"]
+                                },
+                                yAxis: {},
+                                series: [{
+                                    name: '电影种类',
+                                    type: 'bar',
+                                    data: [{{z1}},{{z2}},{{z3}},{{z4}},{{other}}]
+                                }]
+
+                            };
+                            myChart.setOption(option);
+                        </script>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h3 class="text-center">电影种类饼状图</h3>
+                        <div id="main2" style="width: 600px;height:400px;"></div>
+                        <script type="text/javascript">
+                            var myChart = echarts.init(document.getElementById('main2'));
+                            myChart.setOption({
+                                tooltip: {},
+                                series : [
+                                    {
+                                        name: '电影种类',
+                                        type: 'pie',    // 设置图表类型为饼图
+                                        radius: '55%',  // 饼图的半径，外半径为可视区尺寸（容器高宽中较小一项）的 55% 长度。
+                                        data:[          // 数据数组，name 为数据项名称，value 为数据项值
+                                            {value:{{c1}}, name:'爱情'},
+                                            {value:{{c2}}, name:'犯罪'},
+                                            {value:{{c3}}, name:'动画'},
+                                            {value:{{c4}}, name:'喜剧'},
+                                            {value:{{c5}}, name:'历史'},
+                                        ]
+
+                                    }
+                                ]
+                            })
+                        </script>
+                    </td>
+                    <td>
+                        <h3 class="text-center">电影种类柱状图</h3>
+                        <div id="main3" style="width: 600px;height:400px;"></div>
+                        <script type="text/javascript">
+                            // 基于准备好的dom，初始化echarts实例
+                            var myChart = echarts.init(document.getElementById('main3'));
+
+                            // 指定图表的配置项和数据
+                            var option = {
+                                tooltip: {},
+                                legend: {
+                                    data:['电影数量']
+                                },
+                                xAxis: {
+                                    data: ["爱情","犯罪","动画","喜剧","历史"]
+                                },
+                                yAxis: {},
+                                series: [{
+                                    name: '电影种类',
+                                    type: 'bar',
+                                    data: [{{b1}},{{b2}},{{b3}},{{b4}},{{b5}}]
+                                }]
+                            };
+                            myChart.setOption(option);
+                        </script>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

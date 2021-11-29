@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>确认删除用户</title>
+     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+</head>
+<body>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4"></div>
+            <div class="col-md-4">
+                <div style="height: 50px;"></div>
+                <div class="card-header text-center bg-dark">
+                    <h3 class="text-light card-title">用户信息</h3>
+                </div>
+                <div style="height: 20px;"></div>
+                    <form>
+                        <div class="input-group mb-3">
+                          <span class="input-group-text " id="basic-addon1">用户名</span>
+                          <input type="text" value="{{users_delete.username}}" class="form-control" aria-describedby="basic-addon1" disabled="disabled">
+                        </div>
+
+                        <div class="input-group mb-3">
+                          <span class="input-group-text " id="basic-addon5">手机号</span>
+                          <input type="text" value="{{users_delete.phone}}" class="form-control" aria-describedby="basic-addon1" disabled="disabled">
+                        </div>
+
+                        <div class="input-group mb-3">
+                          <span class="input-group-text " id="basic-addon6">邮箱</span>
+                          <input type="text" value="{{users_delete.email}}" class="form-control" aria-describedby="basic-addon1" disabled="disabled">
+                        </div>
+
+                        <div class="input-group mb-3">
+                          <span class="input-group-text" id="basic-addon2">生日</span>
+                          <input type="text" value="{{users_delete.birthday}}" class="form-control" aria-label="Birthday" aria-describedby="basic-addon2" disabled="disabled">
+                        </div>
+
+                        <div class="input-group mb-3">
+                          <span class="input-group-text" id="basic-addon3">性别</span>
+                          <input type="text" value="{{users_delete.sex}}" class="form-control" aria-label="Birthday" aria-describedby="basic-addon2" disabled="disabled">
+                        </div>
+
+                        <div class="input-group">
+                          <span class="input-group-text">自我描述</span>
+                          <textarea class="form-control" aria-label="With textarea" disabled="disabled">{{users_delete.introduction}}</textarea>
+                        </div>
+                   </form>
+                    <form action="{% url 'delete_page' users_delete.id %}" method="post">
+                       <div class="text-center">
+                            <div style="height: 10px;"></div>
+                            <h3>你确认要删除该用户吗？</h3>
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-lg btn-danger">删除</button>
+                            <a href="{% url 'up_user_page' %}" class="btn btn-lg btn-warning">取消</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <div class="col-md-4"></div>
+       </div>
+    </div>
+</body>
+</html>

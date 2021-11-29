@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>test</title>
+    <script src="https://cdn.bootcss.com/echarts/3.0.0/echarts.min.js"></script>
+</head>
+<body>
+    <div data-bs-spy="scroll" data-bs-target="#navbar-example2" data-bs-offset="0" class="scrollspy-example" tabindex="0">
+        <h1 class="text-center">豆瓣前250的电影</h1>
+        <div>
+            <form>
+            <table class="table">
+              <thead>
+                <tr>
+                  <th scope="col">ID</th>
+                  <th scope="col">电影链接</th>
+                  <th scope="col">图片</th>
+                  <th scope="col">电影名</th>
+                  <th scope="col">评分</th>
+                  <th scope="col">评价人数</th>
+                  <th scope="col">介绍</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for movie in movies %}
+                <tr>
+                  <th scope="row">{{movie.id}}</th>
+                  <td>{{movie.url_link}}</td>
+                    <td>
+                        <img src="{{movie.photo_link}}">
+                    </td>
+                  <td>{{movie.chinese_name}}</td>
+                  <td>{{movie.score}}</td>
+                  <td>{{movie.rated}}</td>
+                  <td>{{movie.introduction}}</td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
